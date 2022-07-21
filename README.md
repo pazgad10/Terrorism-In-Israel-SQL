@@ -7,6 +7,7 @@ In the SQL file you'll see my data cleaning and my analyse:
 * I've looked at rolling numbers murdered in Jerusalem.
 * I've looked at the largest victim group of the terrorism.
 * I Showed what percentage of terror attacks were succeed.
+* I've looked for the most dangerous city by successful attacks.
 
 The xlsx file is the database which i took my info from.
 
