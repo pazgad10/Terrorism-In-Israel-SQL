@@ -2,6 +2,10 @@ SELECT *
 FROM PortfolioProject.dbo.TerrorismInIsrael
 
 --Starting by data cleaning
+UPDATE PortfolioProject..TerrorismInIsrael
+SET city = 'Sderot'
+WHERE city = 'Sederot'
+
 ALTER TABLE TerrorismInIsrael
 DROP COLUMN attacktype2_txt
 
@@ -100,7 +104,28 @@ SELECT success, num_of_successes, all_the_attacks1, (num_of_successes/all_the_at
 FROM CTE_Terrorism
 GROUP BY success, num_of_successes, all_the_attacks1
 
+--Looking at all terror attacks successes sorted by city
+SELECT city, success, COUNT(success) OVER (PARTITION BY city) num_of_successes
+FROM PortfolioProject..TerrorismInIsrael
+WHERE success like '1' 
+--city like 'Jerusalem' and
+ORDER BY num_of_successes desc
 
+--Looking at most dangerous city by more than 100 succeessful attacks
+WITH CTE_Terrorism as
+(SELECT eventid, city, iyear, iday, imonth,success, all_the_attacks, COUNT(success) OVER (PARTITION BY city,success) num_of_successes,
+SUM(all_the_attacks) OVER (PARTITION BY city,all_the_attacks) as all_the_attacks1
+FROM PortfolioProject..TerrorismInIsrael
+GROUP BY eventid, city, iyear, iday, imonth, success, all_the_attacks
+)
+SELECT city, success, num_of_successes, all_the_attacks1, (num_of_successes/all_the_attacks1)*100 as percentage_attacks_succeed
+FROM CTE_Terrorism
+WHERE success like '1' and num_of_successes > 100
+GROUP BY city, success, num_of_successes, all_the_attacks1
+ORDER BY percentage_attacks_succeed desc
+
+/*We can assume that Jerusalem is the city with most murdered,
+but the most dangerous city is "Sderot" which has huge amount of succeessful attacks percentage of 89.79% */ 
 
 
 
