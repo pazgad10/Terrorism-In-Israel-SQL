@@ -125,7 +125,7 @@ GROUP BY city, success, num_of_successes, all_the_attacks1
 ORDER BY percentage_attacks_succeed desc
 
 /*We can assume that Jerusalem is the city with most murdered,
-but the most dangerous city is "Sderot" which has huge amount of succeessful attacks percentage of 89.79% */ 
+but the most dangerous city is "Sderot" which has huge amount of successful attacks percentage of 89.79% */ 
 
 
 
